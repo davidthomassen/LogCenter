@@ -77,3 +77,5 @@ public class LogCenterGui extends JFrame {
     }
 
 }
+
+//Das ist ein Commit Test
