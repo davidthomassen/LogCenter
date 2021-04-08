@@ -18,11 +18,9 @@ public class LogCenterGui extends JFrame {
     private JTextArea informationTextField;
     private JButton connectionButton;
 
-    static String username;
-    static String password;
-    static String uri;
+    //Class Variables
     static String savedirectory = "C:\\";
-    private ClientConnection client;
+    private EngineClient client;
 
 
 /*
@@ -33,7 +31,7 @@ public class LogCenterGui extends JFrame {
         this.setContentPane(mainPanel);
         this.pack();
 
-        client = new ClientConnection(username, password, uri);
+        client = new EngineClient(username, password, uri);
 
 
         String resurl = "http://" + ipAdressTextField.getText() + ":" + portTextField.getText() + "/resourceService/logGateway";
@@ -45,7 +43,7 @@ public class LogCenterGui extends JFrame {
                 username = userNameTextField.getText();
                 password = passwordTextField.getText();
                 uri = "http://" + ipAdressTextField.getText() + ":" + portTextField.getText() + "/yawl/logGateway";
-                client = new ClientConnection(username, password, uri);
+                client = new EngineClient(username, password, uri);
             }
         });
         writeLogButton.addActionListener(new ActionListener() {
@@ -60,13 +58,24 @@ public class LogCenterGui extends JFrame {
         //JFrame frame = new LogCenterGui("Log Center");
         //frame.setVisible(true);
 
-        /*String resurl = "http://" + ipAdressTextField.getText() + ":" + portTextField.getText() + "/resourceService/logGateway";*/
-        String uri = "http://localhost:8080/yawl/logGateway";
+        //creates urls
+        String url = "http://localhost:8080/yawl/logGateway";
+        String resurl = "http://localhost:8080/resourceService/logGateway";
 
-        ClientConnection client = new ClientConnection("admin", "YAWL", uri);
-        client.checkConnection();
-        System.out.println(client.allSpecification());
-        writeFile(client.allSpecification(),  "TestAllSpecs", "XES");
+        //Creates new Client
+        EngineClient engClient = new EngineClient("admin", "YAWL", url);
+        engClient.checkConnection();
+        ResourceClient resClient = new ResourceClient("admin", "YAWL", resurl);
+        resClient.checkConnection();
+
+        //Test run for file writing
+        //writeFile(engClient.allSpecification(),  "allSpecification", "xml");
+        //writeFile(engClient.getCompleteCaseLog("1"),  "getCompleteCaseLog", "xml");
+        //writeFile(engClient.getCompleteCaseLogsForSpecification("1", "0.4", ""),  "getCompleteCaseLogForSpecification", "xml");
+        //writeFile(engClient.getSpecificationXESLog("UID_12135543-85dc-4a60-a5b4-b1aec185f609", "0.8", "ApplForLeave"),  "getSpecificationXESLog", "xml");
+        //writeFile(engClient.getCaseEvents("1"),  "getCaseEvents", "xml");
+        writeFile(resClient.getMergedXESLog("UID_12135543-85dc-4a60-a5b4-b1aec185f609", "0.8", "ApplForLeave"), "getMergedXESLog", "xml");
+
 
     }
 
@@ -77,5 +86,3 @@ public class LogCenterGui extends JFrame {
     }
 
 }
-
-//Das ist ein Commit Test
