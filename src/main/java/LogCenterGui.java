@@ -73,15 +73,28 @@ public class LogCenterGui extends JFrame {
         resClient.checkConnection();
 
         //Test run for file writing
-        //writeFile(engClient.allSpecification(),  "allSpecification", "xml");
-        writeFile(getPrettyString(engClient.getCompleteCaseLog("1")),  "getCompleteCaseLog", "xml");
-        //writeFile(engClient.getCompleteCaseLogsForSpecification("1", "0.4", ""),  "getCompleteCaseLogForSpecification", "xml");
-        //writeFile(engClient.getSpecificationXESLog("UID_12135543-85dc-4a60-a5b4-b1aec185f609", "0.8", "ApplForLeave"),  "getSpecificationXESLog", "xml");
-        //writeFile(engClient.getCaseEvents("1"),  "getCaseEvents", "xml");
-        //writeFile(resClient.getMergedXESLog("UID_12135543-85dc-4a60-a5b4-b1aec185f609", "0.8", "ApplForLeave"), "getMergedXESLog", "xml");
+        //fileWriter(getPrettyString(engClient.allSpecification()),  "allSpecification", "xml");
+        //fileWriter(getPrettyString(engClient.getCompleteCaseLog("1")),  "getCompleteCaseLog", "xml");
+        //fileWriter(getPrettyString(engClient.getCompleteCaseLogsForSpecification("1", "0.4", "")),  "getCompleteCaseLogForSpecification", "xml");
+        //fileWriter(engClient.getSpecificationXESLog("UID_12135543-85dc-4a60-a5b4-b1aec185f609", "0.8", "ApplForLeave"),  "getSpecificationXESLog", "xml");
+        //fileWriter(getPrettyString(engClient.getCaseEvents("1")),  "getCaseEventsEngine", "xml");
+        //fileWriter(getPrettyString(resClient.getCaseEvents("1")),  "getCaseEventsrsService", "xml");
+        //fileWriter(resClient.getMergedXESLog("UID_12135543-85dc-4a60-a5b4-b1aec185f609", "0.8", "ApplForLeave"), "getMergedXESLog", "xml");
+        //fileWriter(getPrettyString(resClient.getAllResourceEvents()), "getAllResourceEvents", "xml");
+        //fileWriter(resClient.getMergedXESLog("UID_12135543-85dc-4a60-a5b4-b1aec185f609", "0.8", "ApplForLeave"), "getMergedXESLog", "xml");
+        //fileWriter(getPrettyString(resClient.getSpecificationEvents("UID_12135543-85dc-4a60-a5b4-b1aec185f609", "0.8", "ApplForLeave")), "getSpecificationEvents", "xml");
 
 
     }
+
+
+    //Creates a Document in set Directory
+    private static void fileWriter(String input, String filename, String extention) throws FileNotFoundException, UnsupportedEncodingException {
+        PrintWriter writer = new PrintWriter(savedirectory + filename + "." + extention, "UTF-8");
+        writer.print(input);
+        writer.close();
+    }
+
 
     //Converts input xml String to a readable Format
     public static String getPrettyString(String xmlData) throws Exception {
@@ -98,13 +111,6 @@ public class LogCenterGui extends JFrame {
         transformer.transform(xmlInput, xmlOutput);
 
         return xmlOutput.getWriter().toString();
-    }
-
-    //Creates a Document in set Directory
-    private static void writeFile(String toFile, String filename, String extention) throws FileNotFoundException, UnsupportedEncodingException {
-        PrintWriter writer = new PrintWriter(savedirectory + filename + "." + extention, "UTF-8");
-        writer.print(toFile);
-        writer.close();
     }
 
 }

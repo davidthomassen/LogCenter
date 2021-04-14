@@ -7,7 +7,8 @@ public class ResourceClient {
     //Class variables
     private ResourceLogGatewayClient client;
     private String handle;
-    //Constructor
+
+    //Constructor; Creates and connects new client to resource service; Creates handle which contains information about successful connection
     public ResourceClient(String userId, String password, String url){
         this.client = new ResourceLogGatewayClient(url);
 
@@ -39,4 +40,55 @@ public class ResourceClient {
             return null;
         }
     }
+
+    //Gets an summary xml list of all the logged events for a case
+    public String getCaseEvents(String caseId){
+        try{
+            return this.client.getCaseEvents(caseId, this.handle);
+        } catch(IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    //Gets an xml list of all the resource events logged
+    public String getAllResourceEvents() {
+        try{
+            return this.client.getAllResourceEvents(this.handle);
+        } catch(IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    //Gets an xml list of all work item events involving the specified resource (can be a Participant or a NonHumanResource)
+    public String getResourceHistory(String id){
+        try{
+            return this.client.getResourceHistory(id, this.handle);
+        } catch(IOException e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    //Gets an xml list of all case events for all case instances of a specification
+    public String getSpecificationEvents(String identifier, String version, String uri){
+        try{
+            return this.client.getSpecificationEvents(identifier, version, uri, this.handle);
+        } catch(IOException e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    //Gets all events for all cases of the specification passed
+    public String getSpecificationXESLog(String identifier, String version, String uri){
+        try{
+            return this.client.getSpecificationXESLog(identifier, version, uri, this.handle);
+        } catch(IOException e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 }
